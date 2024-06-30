@@ -12,34 +12,35 @@ x = 0
 y = 990
 
 #wymiary postaci:
+character = pygame.Rect(10,10,90,90)
+velocity = 1
 
-szerokosc = 40
-height = 90
-velocity = 5
+walkleft = False
+walkright = False
+
 
 run = True
 
 while run:
-    pygame.time.delay(30)
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            run = False
+            
     przyciski = pygame.key.get_pressed()
 
     if przyciski[pygame.K_LEFT]:
-        x -= velocity
+        character.x -= velocity
     if przyciski[pygame.K_RIGHT]:
-        x += velocity
+        character.x += velocity
     if przyciski[pygame.K_UP]:
-        y -= velocity
+        character.y -= velocity
     if przyciski[pygame.K_DOWN]:
-        y += velocity
-    if przyciski[pygame.K_ESCAPE]:
-        run = False
+        character.y += velocity
+
     
     window.fill(("black"))
-    pygame.draw.rect(window, ("red"), (x, y, szerokosc, height))
-    pygame.display.update()            
+    pygame.draw.rect(window, ("red"), character)
+    pygame.display.flip()            
 pygame.quit()            

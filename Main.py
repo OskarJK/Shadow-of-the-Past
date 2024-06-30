@@ -1,33 +1,45 @@
-from Settings import *
-from Player import Player
+import pygame
 
-class Game:
-    def __init__(self):
-        pygame.init()
-        self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HIGHT))
-        pygame.display.set_caption("Shadow of the past")
-        self.clock = pygame.time.Clock()
-        self.running = True
+pygame.init()
 
-        self.all_sprites = []
+window = pygame.display.set_mode((1920,1080))
 
-        self.player = Player((400,300), self.all_sprites)
+pygame.display.set_caption("Shadow of the Past")
 
-    def run(self):
-        while self.running:    
+#Położenie startowe postaci
 
-            # Date Time
-            datetime = self.clock.tick() / 1000
+x = 0
+y = 990
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
+#wymiary postaci:
 
-            #Draw
-            pygame.display.update()
+szerokosc = 40
+height = 90
+velocity = 5
 
-        pygame.quit()      
+run = True
 
-if __name__ == "__main__":
-    game = Game()
-    game.run()                      
+while run:
+    pygame.time.delay(30)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    przyciski = pygame.key.get_pressed()
+
+    if przyciski[pygame.K_LEFT]:
+        x -= velocity
+    if przyciski[pygame.K_RIGHT]:
+        x += velocity
+    if przyciski[pygame.K_UP]:
+        y -= velocity
+    if przyciski[pygame.K_DOWN]:
+        y += velocity
+    if przyciski[pygame.K_ESCAPE]:
+        run = False
+    
+    window.fill(("black"))
+    pygame.draw.rect(window, ("red"), (x, y, szerokosc, height))
+    pygame.display.update()            
+pygame.quit()            

@@ -11,10 +11,11 @@ class Game(object):
         #Initialization
         pygame.init()
         self.window = pygame.display.set_mode((1920,1080))
+        self.image_background = pygame.image.load('images/background/background.jpg')
         self.tps_clock = pygame.time.Clock()
         self.tps_delta = 0.0
 
-        self.player = Player(self)
+        self.player = Player(self, 10, 10)
 
         while True:
             for event in pygame.event.get():
@@ -28,8 +29,7 @@ class Game(object):
                 self.tick()
                 self.tps_delta -= 1 / self.tps_max
 
-            #Drawing
-            self.window.fill(("black"))
+            #Drawing          
             self.draw()
             pygame.display.flip()                      
                         
@@ -37,6 +37,7 @@ class Game(object):
         self.player.tick()
 
     def draw(self):
+        self.window.blit(self.image_background, (0, 0))
         self.player.draw()
 
 
